@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/baseline_image_black_48dp" />
+                    app:srcCompat="@drawable/placeholder" />
 
                 <TextView
                     android:id="@+id/photo_title"
