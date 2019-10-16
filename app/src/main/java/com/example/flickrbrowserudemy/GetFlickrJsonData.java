@@ -114,7 +114,7 @@ class GetFlickrJsonData extends AsyncTask<String, Void, List<Photo>> implements 
             }
         }
 
-        if (runningOnSameThread && mCallBack != null) {
+        if (!runningOnSameThread && mCallBack != null) { // ?
             // now inform the caller that processing is done - possibility returning null if there was an error
             mCallBack.onDataAvailable(mPhotoList, status);
         }
