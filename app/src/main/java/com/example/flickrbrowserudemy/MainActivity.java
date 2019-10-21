@@ -1,5 +1,6 @@
 package com.example.flickrbrowserudemy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements GetFlickrJsonData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener {
 
     private static final String TAG = "MainActivity";
@@ -27,8 +28,7 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onCreate: starts");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        activateToolbar(false);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity
 
         mFlickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(this, new ArrayList<Photo>());
         recyclerView.setAdapter(mFlickrRecyclerViewAdapter);
-
-//        GetRawData getRawData = new GetRawData(this);
-//        getRawData.execute(URL);
 
         Log.d(TAG, "onCreate: ends");
     }
@@ -100,6 +97,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onItemLongClick(View view, int position) {
         Log.d(TAG, "onItemLongClick: starts");
-        Toast.makeText(this, "Long tap at position " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Long tap at position " + position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, PhotoDetailActivity.class);
+        intent.putExtra(PHOTO_TRANSFER, mFlickrRecyclerViewAdapter.getPhoto(position));
+        startActivity(intent);
     }
 }
