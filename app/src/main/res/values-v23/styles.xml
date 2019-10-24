@@ -9,7 +9,8 @@
         <item name="android:textColorSecondary">@color/secondary_text</item>
         <item name="android:icon">@color/icons</item>
         <item name="android:windowBackground">@color/primary_light</item>
-        <item name="cardBackgroundColor">@color/primary</item>
+        <item name="cardBackgroundColor">@color/primary_light</item>
         <item name="android:colorBackgroundFloating">@color/primary</item>
+        <item name="android:navigationBarColor">@color/primary_light</item>
     </style>
 </resources>
