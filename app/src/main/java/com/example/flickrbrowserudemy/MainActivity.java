@@ -1,12 +1,12 @@
 package com.example.flickrbrowserudemy;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,11 +45,17 @@ public class MainActivity extends BaseActivity
     protected void onResume() {
         Log.d(TAG, "onResume: starts");
         super.onResume();
-        GetFlickrJsonData getFlickrJsonData = new GetFlickrJsonData(
-                this, URL,
-                "en-us",
-                true);
-        getFlickrJsonData.execute("android,nougat");
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String queryResult = sharedPreferences.getString(FLICKR_QUERY, "");
+
+        if (queryResult.length() > 0) {
+            GetFlickrJsonData getFlickrJsonData = new GetFlickrJsonData(
+                    this, URL,
+                    "en-us",
+                    true);
+            getFlickrJsonData.execute(queryResult);
+        }
+
         Log.d(TAG, "onResume: ends");
     }
 
@@ -70,6 +76,11 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.action_search) {
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
             return true;
         }
         Log.d(TAG, "onOptionsItemSelected() returned: returned");
